@@ -11,6 +11,7 @@ import tk.mybatis.mapper.entity.Example;
 import javax.crypto.MacSpi;
 import javax.print.DocFlavor;
 import java.rmi.MarshalledObject;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -46,11 +47,15 @@ public class TaskController {
     @PostMapping("/changetask")
     public Boolean changeTask(@RequestBody Map<String,Object> maps){
         try {
-            taskService.changeTaskState((Integer) maps.get("task_id"),maps.get("task_name").toString(),maps.get("task_info").toString(),maps.get("task_state").toString(),(Date) maps.get("start_time"),(Date)maps.get("finish_time"));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");
+            Date start = sdf.parse(maps.get("start_time").toString());
+
+            Date finish = sdf.parse(maps.get("finish_time").toString());
+            taskService.changeTaskState((Integer) maps.get("task_id"),maps.get("task_name").toString(),maps.get("task_info").toString(),maps.get("task_state").toString(),start,finish);
             return true;
         }
         catch (Exception e){
-            System.out.println(e);
+            System.out.println(e.getMessage());
             return false;
         }
     }
