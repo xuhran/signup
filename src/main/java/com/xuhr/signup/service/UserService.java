@@ -1,12 +1,7 @@
 package com.xuhr.signup.service;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-import com.sun.org.apache.xpath.internal.SourceTree;
-import com.xuhr.signup.dao.User;
-import org.apache.ibatis.annotations.Select;
-import tk.mybatis.mapper.common.base.select.SelectAllMapper;
+import com.xuhr.signup.dao.Userinfo;
 
-import javax.print.DocFlavor;
 import java.util.List;
 
 /*
@@ -19,7 +14,7 @@ import java.util.List;
 public interface UserService{
     public Integer login(String user_id,String user_password);
     public String register(String user_id,String user_name,String user_telephone,String user_password);
-    public List<User> selectAll();
-    public User selectOneById(String user_id);
-    public User selectOneByName(String user_name);
+    public List<Userinfo> selectAll();
+    public Userinfo selectOneById(String user_id);
+    public Userinfo selectOneByName(String user_name);
 }

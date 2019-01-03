@@ -1,15 +1,14 @@
 package com.xuhr.signup.controller;
 
-import com.xuhr.signup.dao.User;
-import com.xuhr.signup.mapper.UserMapper;
+import com.xuhr.signup.dao.Task;
+import com.xuhr.signup.dao.Userinfo;
+import com.xuhr.signup.dao.Userpassword;
 import com.xuhr.signup.service.UserService;
-import com.xuhr.signup.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import sun.security.util.Password;
+import tk.mybatis.mapper.entity.Example;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -27,12 +26,11 @@ import java.util.Map;
 public class LoginController {
     @Autowired
     private UserService userService;
-
     @PostMapping(value = "/login")
     public Integer login(@RequestBody Map<String,String> maps){
         String id = maps.get("id");
         String password = maps.get("password");
-        System.out.println("in login"+id+ password);
+        System.out.println("in login "+id+" "+ password);
         return userService.login(id,password);
     }
 
@@ -47,9 +45,7 @@ public class LoginController {
     }
 
     @PostMapping("all")
-    public List<User> selectAll(){
+    public List<Userinfo> selectAll(){
         return userService.selectAll();
     }
-
-    public static final String CONTENT_TYPE_FORMED="application/x-www-form-urlencoded";
 }

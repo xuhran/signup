@@ -1,16 +1,16 @@
 package com.xuhr.signup.service.impl;
 
-import com.sun.corba.se.spi.orb.ParserImplBase;
-import com.xuhr.signup.dao.User;
-import com.xuhr.signup.mapper.UserMapper;
+import com.xuhr.signup.dao.Task;
+import com.xuhr.signup.dao.Userinfo;
+import com.xuhr.signup.dao.Userpassword;
+import com.xuhr.signup.mapper.UserinfoMapper;
+import com.xuhr.signup.mapper.UserpasswordMapper;
 import com.xuhr.signup.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import tk.mybatis.mapper.entity.Example;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 /*
@@ -23,10 +23,16 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService{
     @Autowired
-    private UserMapper userMapper;
+    private UserinfoMapper userinfoMapper;
+    @Autowired
+    private UserpasswordMapper userpasswordMapper;
     @Override
     public Integer login(String user_id, String user_password) {
-        User user = userMapper.selectByPrimaryKey(user_id);
+//        Example example = new Example(Userpassword.class);
+//        example.createCriteria().andEqualTo("userId",user_id);
+//        Userpassword user = userpasswordMapper.selectOneByExample(example);
+        Userpassword user = userpasswordMapper.selectByUserId(user_id);
+        System.out.println(user);
         if(user!=null) {
             if (user.getUserPassword().equals(user_password)) {
                 return 1;
@@ -39,16 +45,19 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public String register(String user_id,String user_name, String user_telephone, String user_password) {
-        if (user_id!=null&&user_name!=""&&user_telephone!=""&&user_password!="") {
-            User user = userMapper.selectByPrimaryKey(user_id);
+        if (user_id!=null&&user_name!=""&&user_telephone!=""&&user_telephone.length()==11&&user_password!="") {
+            Userinfo user = userinfoMapper.selectByPrimaryKey(user_id);
             while(user==null){
-                    User user1 = new User();
-                    user1.setUserId(user_id);
-                    user1.setUserName(user_name);
-                    user1.setUserTelephone(user_telephone);
-                    user1.setUserPassword(user_password);
+                    Userinfo userinfo = new Userinfo();
+                    Userpassword userpassword = new Userpassword();
+                    userinfo.setUserId(user_id);
+                    userinfo.setUserName(user_name);
+                    userinfo.setUserTelephone(user_telephone);
+                    userpassword.setUserId(user_id);
+                    userpassword.setUserPassword(user_password);
                     try {
-                        userMapper.insert(user1);
+                        userinfoMapper.insert(userinfo);
+                        userpasswordMapper.insert(userpassword);
                         return "注册成功！";
                     } catch (Exception e) {
                         return e.getLocalizedMessage();
@@ -63,9 +72,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> selectAll(){
+    public List<Userinfo> selectAll(){
         try {
-            List<User> userList = userMapper.selectAll();
+            List<Userinfo> userList = userinfoMapper.selectAll();
             return userList;
         }
         catch (Exception e){
@@ -75,11 +84,29 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User selectOneById(String id){
-        return null;
+    public Userinfo selectOneById(String user_id) {
+        try {
+            return userinfoMapper.selectByUserId(user_id);
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+
     }
+
     @Override
-    public User selectOneByName(String name){
+    public Userinfo selectOneByName(String user_name) {
         return null;
     }
+
+    //
+//    @Override
+//    public User setById(String id){
+//        return null;
+//    }
+//    @Override
+//    public User selectOneByName(String name){
+//        return null;
+//    }
 }

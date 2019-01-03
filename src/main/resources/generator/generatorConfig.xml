@@ -30,8 +30,14 @@
                              targetProject="src/main/java"
                              type="XMLMAPPER"/>
 
-        <table tableName="user">
+        <table tableName="userinfo">
             <generatedKey column="user_id" sqlStatement="JDBC"/>
+        </table>
+        <table tableName="userpassword">
+            <generatedKey column="user_id" sqlStatement="JDBC"/>
+        </table>
+        <table tableName="task">
+            <generatedKey column="task_id" sqlStatement="JDBC"/>
         </table>
     </context>
 </generatorConfiguration>
