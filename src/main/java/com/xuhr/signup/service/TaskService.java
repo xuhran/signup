@@ -13,8 +13,12 @@ import java.util.List;
  *@Version 1.0
  */
 public interface TaskService {
+    //新建任务
     public void addTask(String task_name,String task_info);
-    public void changeTaskState(Integer task_id, String task_name, String task_info , String task_state, Date start_time, Date finish_time);
+    //更改任务
+    public void changeTaskState(Integer task_id, String task_name, String task_info , String task_state, String start_time, String finish_time);
+    //查看所有任务
     public List<Task> getAllTask();
-    public List<Task> findAllTaskByTaskState(String task_state);
+    //根据任务状态查找任务
+    public List<Task> findTasksByState(String task_state);
 }

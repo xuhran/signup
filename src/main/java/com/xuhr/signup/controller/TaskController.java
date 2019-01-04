@@ -30,7 +30,7 @@ import java.util.Map;
 public class TaskController {
     @Autowired
     private TaskService taskService;
-
+//
     @PostMapping("/addtask")
     public Boolean addtask(@RequestBody Map<String,Object> maps){
         try {
@@ -44,14 +44,10 @@ public class TaskController {
         }
 
     }
-    @PostMapping("/changetask")
+    @PostMapping("/updatetask")
     public Boolean changeTask(@RequestBody Map<String,Object> maps){
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");
-            Date start = sdf.parse(maps.get("start_time").toString());
-
-            Date finish = sdf.parse(maps.get("finish_time").toString());
-            taskService.changeTaskState((Integer) maps.get("task_id"),maps.get("task_name").toString(),maps.get("task_info").toString(),maps.get("task_state").toString(),start,finish);
+            taskService.changeTaskState((Integer) maps.get("task_id"),maps.get("task_name").toString(),maps.get("task_info").toString(),maps.get("task_state").toString(),maps.get("start_time").toString(),maps.get("finish_time").toString());
             return true;
         }
         catch (Exception e){
@@ -74,7 +70,7 @@ public class TaskController {
     @PostMapping("/findTasksByState")
     public List<Task> findTasksByState(@RequestBody Map<String,Object> maps){
             try {
-                return taskService.findAllTaskByTaskState(maps.get("task_state").toString());
+                return taskService.findTasksByState(maps.get("task_state").toString());
             }
             catch (Exception e){
                 System.out.println(e);

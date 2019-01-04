@@ -12,6 +12,7 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.jws.soap.SOAPBinding;
 import java.util.List;
+import java.util.Map;
 
 /*
  *@ClassName UserServiceImpl
@@ -22,8 +23,10 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl implements UserService{
+    //用户表相关mapper
     @Autowired
     private UserinfoMapper userinfoMapper;
+    //用户密码表相关mapper
     @Autowired
     private UserpasswordMapper userpasswordMapper;
     @Override
@@ -109,4 +112,23 @@ public class UserServiceImpl implements UserService{
 //    public User selectOneByName(String name){
 //        return null;
 //    }
+
+    @Override
+    public Integer updatePwdByUserId(Map<String ,String > maps){
+        try {
+            String user_id = maps.get("user_id");
+            Userpassword userpassword = userpasswordMapper.selectByUserId(user_id);
+            if (userpassword!=null) {
+                userpasswordMapper.updatePwdByUserId(maps);
+                return 1;
+            }
+            else{
+                return -0;
+            }
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return -1;
+        }
+    }
 }

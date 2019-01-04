@@ -1,6 +1,7 @@
 package com.xuhr.signup.service.impl;
 
 import com.xuhr.signup.dao.Task;
+import com.xuhr.signup.dao.Userinfo;
 import com.xuhr.signup.mapper.TaskMapper;
 import com.xuhr.signup.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class TaskServiceImpl implements TaskService {
             task.setTaskName(task_name);
             task.setTaskstate("已开工");
             task.setTaskInfo(task_info);
-            task.setStartTime(date);
+            task.setStartTime(date.toString());
             task.setFinishTime(null);
             taskMapper.insert(task);
             System.out.println(task);
@@ -42,9 +43,16 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void changeTaskState(Integer task_id, String task_name, String task_info, String task_state, Date start_time, Date finish_time) {
+    public void changeTaskState(Integer task_id, String task_name, String task_info, String task_state, String start_time, String finish_time) {
             try {
-                taskMapper.updateByExampleSelective(new Task(), Arrays.asList(task_id,task_name,task_info,task_state,start_time,finish_time));
+                Task task = new Task();
+                task.setTaskId(task_id);
+                task.setTaskName(task_name);
+                task.setTaskInfo(task_info);
+                task.setTaskstate(task_state);
+                task.setStartTime(start_time);
+                task.setFinishTime(finish_time);
+                taskMapper.updateByPrimaryKey(task);
             }
             catch (Exception e){
                 System.out.println(e);
@@ -64,7 +72,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> findAllTaskByTaskState(String task_state) {
+    public List<Task> findTasksByState(String task_state) {
         try {
             Example example = new Example(Task.class);
             example.createCriteria().andEqualTo("taskstate",task_state);

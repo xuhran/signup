@@ -3,6 +3,8 @@ package com.xuhr.signup.controller;
 import com.xuhr.signup.dao.Task;
 import com.xuhr.signup.dao.Userinfo;
 import com.xuhr.signup.dao.Userpassword;
+import com.xuhr.signup.mapper.UserinfoMapper;
+import com.xuhr.signup.mapper.UserpasswordMapper;
 import com.xuhr.signup.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,8 +46,14 @@ public class LoginController {
         return userService.register(id,name,telephone,password);
     }
 
-    @PostMapping("all")
+    @PostMapping("/all")
     public List<Userinfo> selectAll(){
         return userService.selectAll();
     }
+
+    @PostMapping("/pwd")
+    public Integer updatePwdByUserId(@RequestBody Map<String,String> maps){
+        return userService.updatePwdByUserId(maps);
+    }
+
 }
