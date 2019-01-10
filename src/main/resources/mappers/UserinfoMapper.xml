@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuhr.signup.mapper.UserinfoMapper">
+  <resultMap id="BaseResultMap" type="com.xuhr.signup.model.Userinfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_telephone" jdbcType="VARCHAR" property="userTelephone" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+  </resultMap>
+
+  <select id="selectOneByUserId" parameterType="String" resultMap="BaseResultMap">
+    SELECT * FROM userinfo WHERE user_id=#{user_id}
+  </select>
+
+  <update id="updatePasswordByUserId" parameterType="Map">
+    UPDATE userinfo SET user_password = #{user_password} WHERE user_id=#{user_id}
+  </update>
+
+
+</mapper>
