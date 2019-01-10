@@ -36,5 +36,8 @@
         <table tableName="task">
             <generatedKey column="task_id" sqlStatement="JDBC"/>
         </table>
+        <table tableName="user_role">
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
     </context>
 </generatorConfiguration>

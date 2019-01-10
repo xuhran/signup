@@ -1,7 +1,7 @@
 package com.xuhr.signup.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xuhr.signup.model.Userinfo;
-import net.minidev.json.JSONObject;
 
 import java.util.List;
 import java.util.Map;

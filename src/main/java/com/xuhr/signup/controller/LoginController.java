@@ -1,5 +1,6 @@
 package com.xuhr.signup.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xuhr.signup.model.Userinfo;
 import com.xuhr.signup.service.UserService;
 import net.minidev.json.JSONObject;

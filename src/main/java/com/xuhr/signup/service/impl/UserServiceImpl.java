@@ -1,9 +1,9 @@
 package com.xuhr.signup.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xuhr.signup.model.Userinfo;
 import com.xuhr.signup.mapper.UserinfoMapper;
 import com.xuhr.signup.service.UserService;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,19 +35,22 @@ public class UserServiceImpl implements UserService{
             System.out.println(user);
             if (user.getUserPassword().equals(user_password)) {
                 //login success
-                jsonObject.put("status","1");
+                jsonObject.put("status",1);
                 jsonObject.put("message","登陆成功！");
+                jsonObject.put("data","");
                 return jsonObject;
             } else {
                 //password error
-                jsonObject.put("status","-1");
+                jsonObject.put("status",-1);
                 jsonObject.put("message","密码错误！");
+                jsonObject.put("data","");
                 return jsonObject;
             }
         }
         //user doesnot exist
-        jsonObject.put("status","0");
+        jsonObject.put("status",0);
         jsonObject.put("message","用户不存在！");
+        jsonObject.put("data","");
         return jsonObject;
     }
 
