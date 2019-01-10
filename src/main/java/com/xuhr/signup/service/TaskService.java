@@ -1,9 +1,9 @@
 package com.xuhr.signup.service;
 
-import com.xuhr.signup.dao.Task;
+import com.xuhr.signup.model.Task;
 
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /*
  *@ClassName TaskService
@@ -16,7 +16,7 @@ public interface TaskService {
     //新建任务
     public void addTask(String task_name,String task_info);
     //更改任务
-    public void changeTaskState(Integer task_id, String task_name, String task_info , String task_state, String start_time, String finish_time);
+    public void updateTask(Map<String,Object> map);
     //查看所有任务
     public List<Task> getAllTask();
     //根据任务状态查找任务

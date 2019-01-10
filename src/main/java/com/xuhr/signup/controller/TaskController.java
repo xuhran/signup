@@ -1,18 +1,11 @@
 package com.xuhr.signup.controller;
 
-import com.xuhr.signup.dao.Task;
-import com.xuhr.signup.mapper.UserpasswordMapper;
+import com.xuhr.signup.model.Task;
 import com.xuhr.signup.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import tk.mybatis.mapper.entity.Example;
 
-import javax.crypto.MacSpi;
-import javax.print.DocFlavor;
-import java.rmi.MarshalledObject;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -31,10 +24,9 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 //
-    @PostMapping("/addtask")
+    @GetMapping("/addTask")
     public Boolean addtask(@RequestBody Map<String,Object> maps){
         try {
-            System.out.println(maps);
             taskService.addTask(maps.get("task_name").toString(),maps.get("task_info").toString());
             return true;
         }
@@ -44,10 +36,11 @@ public class TaskController {
         }
 
     }
-    @PostMapping("/updatetask")
+    @GetMapping("/updateTask")
     public Boolean changeTask(@RequestBody Map<String,Object> maps){
         try {
-            taskService.changeTaskState((Integer) maps.get("task_id"),maps.get("task_name").toString(),maps.get("task_info").toString(),maps.get("task_state").toString(),maps.get("start_time").toString(),maps.get("finish_time").toString());
+            System.out.println(maps);
+            taskService.updateTask(maps);
             return true;
         }
         catch (Exception e){
@@ -56,7 +49,7 @@ public class TaskController {
         }
     }
 
-    @PostMapping("/getall")
+    @PostMapping("/getAllTasks")
     public List<Task> getall(){
         try {
             return taskService.getAllTask();

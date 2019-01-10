@@ -1,16 +1,13 @@
 package com.xuhr.signup.service.impl;
 
-import com.xuhr.signup.dao.Task;
-import com.xuhr.signup.dao.Userinfo;
+import com.xuhr.signup.model.Task;
 import com.xuhr.signup.mapper.TaskMapper;
 import com.xuhr.signup.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
+
+import java.util.*;
 
 /*
  *@ClassName TaskServiceImpl
@@ -43,21 +40,21 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void changeTaskState(Integer task_id, String task_name, String task_info, String task_state, String start_time, String finish_time) {
-            try {
-                Task task = new Task();
-                task.setTaskId(task_id);
-                task.setTaskName(task_name);
-                task.setTaskInfo(task_info);
-                task.setTaskstate(task_state);
-                task.setStartTime(start_time);
-                task.setFinishTime(finish_time);
-                taskMapper.updateByPrimaryKey(task);
-            }
-            catch (Exception e){
-                System.out.println(e);
+    public void updateTask(Map<String,Object> map) {
+        try {
+            Task task = new Task();
+            task.setTaskId((Integer) map.get("task_id"));
+            task.setTaskName(map.get("task_name").toString());
+            task.setTaskInfo(map.get("task_info").toString());
+            task.setTaskstate(map.get("task_state").toString());
+            task.setStartTime(map.get("start_time").toString());
+            task.setFinishTime(map.get("finish_time").toString());
+            taskMapper.updateByPrimaryKeySelective(task);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
 
-            }
+        }
     }
 
     @Override
@@ -66,7 +63,7 @@ public class TaskServiceImpl implements TaskService {
             return taskMapper.selectAll();
         }
         catch (Exception e){
-            System.out.println(e);
+            System.out.println(e.getMessage());
             return null;
         }
     }

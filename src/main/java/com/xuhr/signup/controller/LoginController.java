@@ -1,16 +1,14 @@
 package com.xuhr.signup.controller;
 
-import com.xuhr.signup.dao.Task;
-import com.xuhr.signup.dao.Userinfo;
-import com.xuhr.signup.dao.Userpassword;
-import com.xuhr.signup.mapper.UserinfoMapper;
-import com.xuhr.signup.mapper.UserpasswordMapper;
+import com.xuhr.signup.model.Userinfo;
 import com.xuhr.signup.service.UserService;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import tk.mybatis.mapper.entity.Example;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -25,35 +23,51 @@ import java.util.Map;
 @Controller
 @ResponseBody
 @RequestMapping
-public class LoginController {
+public class LoginController{
     @Autowired
     private UserService userService;
-    @PostMapping(value = "/login")
-    public Integer login(@RequestBody Map<String,String> maps){
-        String id = maps.get("id");
-        String password = maps.get("password");
-        System.out.println("in login "+id+" "+ password);
+
+
+    @PostMapping(value = "/login" , produces = {"application/json", "application/xml"},consumes = {"application/x-www-form-urlencoded"})
+    public JSONObject login(HttpServletRequest request){
+        String id = request.getParameter("userName").toString();
+        String password = request.getParameter("password").toString();
+        System.out.println("in login "+id+","+ password);
         return userService.login(id,password);
     }
 
-    @PostMapping(value = "/register")
+    @GetMapping(value = "/register" )
     public String register(@RequestBody Map<String,String> maps){
         String id = maps.get("id");
         String name = maps.get("name");
         String telephone = maps.get("telephone");
         String password = maps.get("password");
-        System.out.println("in register"+id +name+ telephone +password);
-        return userService.register(id,name,telephone,password);
+        int roleid = Integer.parseInt(maps.get("roleid"));
+        System.out.println("in register"+id +name+ telephone +password+roleid);
+        return userService.register(id,name,telephone,password,roleid);
     }
 
-    @PostMapping("/all")
+
+    @PostMapping("/getAllUsers")
     public List<Userinfo> selectAll(){
         return userService.selectAll();
     }
 
-    @PostMapping("/pwd")
+
+    @GetMapping("/updatePassword")
     public Integer updatePwdByUserId(@RequestBody Map<String,String> maps){
-        return userService.updatePwdByUserId(maps);
+        return userService.updatePasswordByUserId(maps);
     }
 
+
+//    @PostMapping(value = "/login1")
+//    public HttpResult login(@RequestBody LoginBean loginBean, HttpServletRequest request) throws IOException {
+//        String username = loginBean.getAccount();
+//        String password = loginBean.getPassword();
+//        String captcha = loginBean.getCaptcha();...
+//        　　　　  // 系统登录认证
+//        JwtAuthenticatioToken token = SecurityUtils.login(request, username, password, authenticationManager);
+//
+//        return HttpResult.ok(token);
+//    }
 }
