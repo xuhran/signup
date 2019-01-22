@@ -5,10 +5,10 @@ import javax.persistence.*;
 @Table(name = "userinfo")
 public class Userinfo {
     @Id
+    @GeneratedValue(generator = "JDBC")
     private Integer id;
 
     @Column(name = "user_id")
-    @GeneratedValue(generator = "JDBC")
     private String userId;
 
     @Column(name = "user_name")
@@ -105,17 +105,5 @@ public class Userinfo {
      */
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
-    }
-
-    @Override
-    public String toString() {
-        return "Userinfo{" +
-                "id=" + id +
-                ", userId='" + userId + '\'' +
-                ", userName='" + userName + '\'' +
-                ", userTelephone='" + userTelephone + '\'' +
-                ", roleId=" + roleId +
-                ", userPassword='" + userPassword + '\'' +
-                '}';
     }
 }

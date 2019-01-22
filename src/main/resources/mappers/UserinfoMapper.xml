@@ -12,14 +12,7 @@
     <result column="role_id" jdbcType="INTEGER" property="roleId" />
     <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
   </resultMap>
-
-  <select id="selectOneByUserId" parameterType="String" resultMap="BaseResultMap">
-    SELECT * FROM userinfo WHERE user_id=#{user_id}
+  <select id="getNameById" resultType="String" parameterType="String">
+    SELECT user_name FROM userinfo WHERE user_id=#{userId}
   </select>
-
-  <update id="updatePasswordByUserId" parameterType="Map">
-    UPDATE userinfo SET user_password = #{user_password} WHERE user_id=#{user_id}
-  </update>
-
-
 </mapper>
