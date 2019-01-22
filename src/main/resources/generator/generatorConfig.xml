@@ -47,5 +47,8 @@
         <table tableName="sys_users">
             <generatedKey column="user_id" sqlStatement="JDBC"/>
         </table>
+        <table tableName="user_role">
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
     </context>
 </generatorConfiguration>
